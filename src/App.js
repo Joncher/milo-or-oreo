@@ -1,16 +1,33 @@
 /* eslint-disable default-case */
 import React, {useState} from 'react';
+import ImageUploader from 'react-images-upload'
 import './App.css';
+
+const UploadComponent = props => (
+  <form>
+    <ImageUploader
+      key = "image-uploader"
+      withIcon = {true}
+      singleImage = {true}
+      withPreview = {true}
+      label = "Maximum size file: 5MB"
+      buttonText = "Choose File Image"
+      onChange = {props.onImage}
+      imgExtension = {['.jpg', '.png', '.jpng']}
+      maxFileSize= {5242880}
+    ></ImageUploader>
+  </form>
+)
+
 
 const App = () => {
   const [progress, setProgress] = useState('getUpload')
-  const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   const content = () => {
     switch (progress) {
         case 'getUpload':
-            return <div>PLease upload image</div>
+            return <UploadComponent onImage={onImage}/>
         case 'uploading':
             return <h2>Uploading....</h2>;
         case 'uploaded':
